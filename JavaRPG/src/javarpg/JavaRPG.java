@@ -61,10 +61,10 @@ public class JavaRPG implements Runnable {
     }
     
     private void update(){
-        _keyManager.update();
-        handleInput(_keyManager.getInput());
-        _objectHandler.handleInput(_keyManager.getInput());
-        _objectHandler.handleInput(_mouseManager.getInput());
+        _inputManager.update();
+        handleInput(_inputManager.getInput());
+        _objectHandler.handleInput(_inputManager.getInput());
+        
         
         _objectHandler.update();
         
@@ -75,7 +75,7 @@ public class JavaRPG implements Runnable {
     private void render(){
         
         Canvas c = _screen.getCanvas();
-        c.setBackground(Color.black);
+        c.setBackground(Color.lightGray);
         _bs = c.getBufferStrategy();
         if(_bs == null){
             _screen.getCanvas().createBufferStrategy(3);
@@ -95,11 +95,10 @@ public class JavaRPG implements Runnable {
     
     private void initGame(){
         _screen = new Screen("Game", Global.SCREEN_WIDTH, Global.SCREEN_HEIGHT);
-        _keyManager = new KeyManager();
-        _mouseManager = new MouseManager();
-        _screen.getFrame().addKeyListener(_keyManager);
-        _screen.getCanvas().addMouseListener(_mouseManager);
-        _screen.getCanvas().addMouseMotionListener(_mouseManager);
+        _inputManager = new InputManager();
+        _screen.getFrame().addKeyListener(_inputManager);
+        _screen.getCanvas().addMouseListener(_inputManager);
+        _screen.getCanvas().addMouseMotionListener(_inputManager);
         _screen.getCanvas().setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
         
         
@@ -136,8 +135,7 @@ public class JavaRPG implements Runnable {
     Screen _screen;
     BufferStrategy _bs;
     Graphics _g;
-    KeyManager _keyManager;
-    MouseManager _mouseManager;
+    InputManager _inputManager;
     private boolean _running = true;
     
     private GameObjectHandler _objectHandler;

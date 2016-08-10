@@ -7,6 +7,11 @@ package javarpg;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import utils.Input;
 import utils.Vector;
 import utils.Jar;
@@ -20,6 +25,11 @@ public class Player extends Creature {
     public Player(double x, double y) {
         super(x, y);
         _attac = new Attac();
+        try {
+            _texture = ImageIO.read(new File("res/archer.png"));
+        } catch (IOException ex) {
+            Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
+        }
     };
     
     @Override

@@ -7,6 +7,11 @@ package javarpg;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import utils.Vector;
 
 /**
@@ -20,6 +25,11 @@ public class Projectile extends GameObject{
         _origin = o;
         _color = Color.blue;
         _size = 5;
+        try {
+            _texture = ImageIO.read(new File("res/arrow.png"));
+        } catch (IOException ex) {
+            Logger.getLogger(Projectile.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     public Projectile(Vector start, Vector end, GameObject o){
@@ -31,6 +41,11 @@ public class Projectile extends GameObject{
         _origin = o;
         _color = Color.blue;
         _size = 5;
+        try {
+            _texture = ImageIO.read(new File("res/arrow.png"));
+        } catch (IOException ex) {
+            Logger.getLogger(Projectile.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
     }
     

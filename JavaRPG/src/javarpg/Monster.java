@@ -6,8 +6,11 @@
 package javarpg;
 
 import java.awt.Color;
-import java.awt.Graphics;
-import utils.Input;
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import utils.Vector;
 
 /**
@@ -20,12 +23,22 @@ public class Monster extends Creature {
         super(x, y);
         _color = Color.red;
         _size = 20;
+        try {
+            _texture = ImageIO.read(new File("res/monster.png"));
+        } catch (IOException ex) {
+            Logger.getLogger(Monster.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     Monster(Vector pos) {
         super(pos.getX(), pos.getY());
         _color = Color.red;
         _size = 20;
+        try {
+            _texture = ImageIO.read(new File("res/monster.png"));
+        } catch (IOException ex) {
+            Logger.getLogger(Monster.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
  
     @Override

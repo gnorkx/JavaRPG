@@ -19,10 +19,14 @@ public class RenderingHandler {
     }
     
     void render(GameObject o){
-        int size = o.getSize();
+        /*int size = o.getSize();
         Vector pos = new Vector(o.getPos());
         _g.setColor(o.getColor());
         _g.drawOval((int)pos.getX(), (int)pos.getY(), size , size);
+        */
+         Vector pos = new Vector(o.getPos());
+        _g.drawImage(o.getTexture(), (int)pos.getX(), (int)pos.getY(),40,40,null);
+        
     }
     
     private Graphics _g;

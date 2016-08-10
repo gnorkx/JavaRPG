@@ -7,6 +7,7 @@ package javarpg;
 import java.awt.Color;
 import utils.*;
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 
 /**
  *
@@ -32,6 +33,8 @@ public abstract class GameObject {
     
     public abstract void update();
     
+    
+    
     public void setPos(int x, int y){
         _pos.set(x, y);
     }
@@ -51,11 +54,14 @@ public abstract class GameObject {
         _pos.add(_vel.times(Global.dT));
     }
     
-    
+    public BufferedImage getTexture(){
+        return _texture;
+    }
     
     
     protected Vector _pos;
     protected Vector _vel;
     protected int _size;
     protected Color _color;
+    protected BufferedImage _texture;
 }
