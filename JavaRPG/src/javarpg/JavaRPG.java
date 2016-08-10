@@ -8,9 +8,13 @@ package javarpg;
 import java.util.ArrayList;
 import java.awt.Canvas;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Graphics;
+import java.awt.Toolkit;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
+import utils.*;
+import static utils.Vector.minus;
 
 
   
@@ -24,21 +28,47 @@ public class JavaRPG implements Runnable {
     public static void main(String[] args) {
         JavaRPG game = new JavaRPG();
         new Thread(game).start();
+        
+        
     }
     
     @Override
     public void run(){
         initGame();
+        long timestamp;
+        long oldTimestamp;
         while(_running){
+            oldTimestamp = System.currentTimeMillis();
             update();
+            timestamp = System.currentTimeMillis();
+            if(timestamp-oldTimestamp > maxLoopTime) {
+              //System.out.println("Wir zu spät!");
+              continue;
+            }
             render();
+            timestamp = System.currentTimeMillis();
+            //System.out.println(maxLoopTime + " : " + (timestamp-oldTimestamp));
+            if(timestamp-oldTimestamp <= maxLoopTime) {
+              try {
+                Thread.sleep(maxLoopTime - (timestamp-oldTimestamp) );
+              } catch (InterruptedException e) {
+                e.printStackTrace();
+              }
+            }
+         
         }
+        _screen.getFrame().dispose();
     }
     
     private void update(){
-        for(GameObject o: _objects){
-            o.update();
-        }
+        _keyManager.update();
+        handleInput(_keyManager.getInput());
+        _objectHandler.handleInput(_keyManager.getInput());
+        _objectHandler.handleInput(_mouseManager.getInput());
+        
+        _objectHandler.update();
+        
+    
     }
     
         
@@ -48,31 +78,70 @@ public class JavaRPG implements Runnable {
         c.setBackground(Color.black);
         _bs = c.getBufferStrategy();
         if(_bs == null){
-            _screen.getCanvas().createBufferStrategy(2);
+            _screen.getCanvas().createBufferStrategy(3);
+            _bs = c.getBufferStrategy();
+            _g = _bs.getDrawGraphics();
+            ServiceLocator.registerRender(new RenderingHandler(_g));
             return;
         }
-        _g = _bs.getDrawGraphics();
         //Clear Screen
-        _g.clearRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-        for(GameObject o: _objects){
-            o.render(_g);
-        }
+        _g.clearRect(0, 0, Global.SCREEN_WIDTH, Global.SCREEN_HEIGHT);
+        _objectHandler.render(_g);
         _bs.show();
-        _g.dispose();
+        //_g.dispose();
+        Toolkit.getDefaultToolkit().sync();
 
     }
     
     private void initGame(){
-        _screen = new Screen("Game", SCREEN_WIDTH, SCREEN_HEIGHT);
-        _objects.add(new GameObject(200,200,0,0.2));
-        _objects.add(new GameObject(200,200,0,0.3));
-        _objects.add(new GameObject(200,200,0,0.1));
+        _screen = new Screen("Game", Global.SCREEN_WIDTH, Global.SCREEN_HEIGHT);
+        _keyManager = new KeyManager();
+        _mouseManager = new MouseManager();
+        _screen.getFrame().addKeyListener(_keyManager);
+        _screen.getCanvas().addMouseListener(_mouseManager);
+        _screen.getCanvas().addMouseMotionListener(_mouseManager);
+        _screen.getCanvas().setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
+        
+        
+        
+        _objectHandler = new GameObjectHandler();
+        ServiceLocator.registerObjectHandler(_objectHandler);
+        _objectHandler.newPlayer();
+        _objectHandler.newMonster(new Vector(400,300));
+        
         
     }
     
+    private void handleInput(Input in){
+        
+        if(in.quit == true)
+            _running = false;
+        
+    }
+   /* 
+    private void checkForCollision(){
+        for(GameObject o: _objects){
+            if(!(o instanceof Projectile) ){
+                for(GameObject p: _objects){
+                    if( p instanceof Projectile ){
+                        Vector diff = minus (o.getPos(), p.getPos());
+                        if(diff.abs()< 20 + 10) ((Creature )o)
+                                .hit((Projectile) p);
+                    }
+                }
+            }
+        }
+    }
+    */
     Screen _screen;
     BufferStrategy _bs;
     Graphics _g;
+    KeyManager _keyManager;
+    MouseManager _mouseManager;
     private boolean _running = true;
-    private ArrayList<GameObject> _objects = new ArrayList<GameObject>();
+    
+    private GameObjectHandler _objectHandler;
+    
+    public static final int FPS = 60;
+    public static final long maxLoopTime = 1000 / FPS;
 }
