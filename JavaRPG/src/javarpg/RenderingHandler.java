@@ -25,7 +25,7 @@ public class RenderingHandler {
         _g.drawOval((int)pos.getX(), (int)pos.getY(), size , size);
         */
          Vector pos = new Vector(o.getPos());
-        _g.drawImage(o.getTexture(), (int)pos.getX(), (int)pos.getY(),40,40,null);
+        _g.drawImage(o.getTexture(), (int)pos.getX(), (int)pos.getY(),(int)o.getBox().getH(),(int)o.getBox().getW(),null);
         
     }
     

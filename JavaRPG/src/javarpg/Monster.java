@@ -23,6 +23,7 @@ public class Monster extends Creature {
         super(x, y);
         _color = Color.red;
         _size = 20;
+        _boundingBox.setSize(50.,70.);
         try {
             _texture = ImageIO.read(new File("res/monster.png"));
         } catch (IOException ex) {
@@ -34,6 +35,7 @@ public class Monster extends Creature {
         super(pos.getX(), pos.getY());
         _color = Color.red;
         _size = 20;
+        _boundingBox.setSize(50.,70.);
         try {
             _texture = ImageIO.read(new File("res/monster.png"));
         } catch (IOException ex) {
@@ -48,5 +50,6 @@ public class Monster extends Creature {
             dead();
     };
     
+   
         
 }

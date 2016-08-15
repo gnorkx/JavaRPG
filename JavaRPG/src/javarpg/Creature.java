@@ -7,6 +7,7 @@ package javarpg;
 
 import java.awt.Graphics;
 import utils.Jar;
+import utils.Vector;
 
 /**
  *
@@ -22,20 +23,23 @@ public abstract class Creature extends GameObject{
     @Override
     public abstract void update();
     
-    public void hit (Projectile o){
-        
-        if(o.getOwner() == this) 
-            return;
-        
-        _health.remove(o.getDamage());
-        System.out.println("hit! " + _health);
-        
-    }
     
     public void dead(){
-       _pos.set(99999,99999);
+      // _pos.set(99999,99999);
+       _boundingBox.setSize(70,30);
     }
     
+    
+    @Override
+    double getDamage(){
+        return 0.;
+    }
+    
+    @Override
+    void takeDamage(double d){
+        _health.remove(d);
+        System.out.println(_health);
+    }
        
     protected Jar _health;
     

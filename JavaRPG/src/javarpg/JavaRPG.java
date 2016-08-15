@@ -5,16 +5,13 @@
  */
 package javarpg;
 
-import java.util.ArrayList;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Graphics;
 import java.awt.Toolkit;
 import java.awt.image.BufferStrategy;
-import java.awt.image.BufferedImage;
 import utils.*;
-import static utils.Vector.minus;
 
 
   
@@ -61,12 +58,14 @@ public class JavaRPG implements Runnable {
     }
     
     private void update(){
+        
         _inputManager.update();
         handleInput(_inputManager.getInput());
         _objectHandler.handleInput(_inputManager.getInput());
         
         
         _objectHandler.update();
+        
         
     
     }
@@ -96,11 +95,14 @@ public class JavaRPG implements Runnable {
     private void initGame(){
         _screen = new Screen("Game", Global.SCREEN_WIDTH, Global.SCREEN_HEIGHT);
         _inputManager = new InputManager();
-        _screen.getFrame().addKeyListener(_inputManager);
+        
         _screen.getCanvas().addMouseListener(_inputManager);
         _screen.getCanvas().addMouseMotionListener(_inputManager);
+        _screen.getCanvas().addKeyListener(_inputManager);
         _screen.getCanvas().setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
-        
+        _screen.getCanvas().setFocusable(true);
+        _screen.getFrame().setVisible(true);
+
         
         
         _objectHandler = new GameObjectHandler();
@@ -117,21 +119,7 @@ public class JavaRPG implements Runnable {
             _running = false;
         
     }
-   /* 
-    private void checkForCollision(){
-        for(GameObject o: _objects){
-            if(!(o instanceof Projectile) ){
-                for(GameObject p: _objects){
-                    if( p instanceof Projectile ){
-                        Vector diff = minus (o.getPos(), p.getPos());
-                        if(diff.abs()< 20 + 10) ((Creature )o)
-                                .hit((Projectile) p);
-                    }
-                }
-            }
-        }
-    }
-    */
+   
     Screen _screen;
     BufferStrategy _bs;
     Graphics _g;

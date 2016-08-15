@@ -42,6 +42,7 @@ public class InputManager extends MouseInputAdapter implements KeyListener {
     public void keyTyped(KeyEvent e) {
     }
     
+    
     @Override
     public void mousePressed(MouseEvent e) {
         _input.lMouse = true;

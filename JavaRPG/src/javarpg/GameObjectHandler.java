@@ -8,6 +8,7 @@ package javarpg;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import utils.Input;
+import utils.Rect;
 import utils.ServiceLocator;
 import utils.Vector;
 
@@ -43,13 +44,14 @@ public class GameObjectHandler {
         
         for(Creature c: _creatures){
             for(Projectile p: _projectiles){
-                //handleCollision(c,p);
+                if(p.getOwner() == c) continue;
+                handleCollision(c,p);
             }
         }
         for(Creature c1: _creatures){
             for(Creature c2: _creatures){
                 if(c1 == c2) continue;
-                //handleCollision(c1,c2);
+                handleCollision(c1,c2);
             }
         }
         
@@ -69,14 +71,26 @@ public class GameObjectHandler {
     }
             
     
-    private void handleCollision(){
+    private void handleCollision(GameObject o1, GameObject o2){
+        //do they collide?
+        Rect rect1 = o1.getBox(); Rect rect2 = o2.getBox();
+        Rect overlap = rect1.getOverlap(rect2);
+        if(overlap == null) return;
+        System.out.println("hit");
         
+        handleHit(o1,o2, overlap);
+        
+    }
+    
+    private void handleHit(GameObject o1, GameObject o2, Rect overlap){
+        double d1 = o1.getDamage(); double d2 = o2.getDamage();
+        o1.takeDamage(d2); o2.takeDamage(d1);
     }
             
     private ArrayList<GameObject> _objects = new ArrayList();
     private Player _player;
-    private ArrayList<Projectile> _projectiles = new ArrayList();;
-    private ArrayList<Creature> _creatures = new ArrayList();;
+    private ArrayList<Projectile> _projectiles = new ArrayList();
+    private ArrayList<Creature> _creatures = new ArrayList();
 
     
 }
