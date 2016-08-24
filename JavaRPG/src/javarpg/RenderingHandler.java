@@ -5,7 +5,6 @@
  */
 package javarpg;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import utils.Vector;
 
@@ -19,15 +18,14 @@ public class RenderingHandler {
     }
     
     void render(GameObject o){
-        /*int size = o.getSize();
-        Vector pos = new Vector(o.getPos());
-        _g.setColor(o.getColor());
-        _g.drawOval((int)pos.getX(), (int)pos.getY(), size , size);
-        */
          Vector pos = new Vector(o.getPos());
-        _g.drawImage(o.getTexture(), (int)pos.getX(), (int)pos.getY(),(int)o.getBox().getH(),(int)o.getBox().getW(),null);
+        _g.drawImage(o.getTexture(), (int)pos.getX(), (int)pos.getY(),(int)o.getBox().getW(),(int)o.getBox().getH(),null);
         
     }
-    
+    void render(Tile t){
+         Vector pos = new Vector(t.getBox().getPos());
+        _g.drawImage(t.getTexture(), (int)pos.getX(), (int)pos.getY(),(int)t.getBox().getW(),(int)t.getBox().getH(),null);
+        
+    }
     private Graphics _g;
 }

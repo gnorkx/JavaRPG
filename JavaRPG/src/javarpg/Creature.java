@@ -5,7 +5,9 @@
  */
 package javarpg;
 
-import java.awt.Graphics;
+
+
+import static javarpg.ObjectState.*;
 import utils.Jar;
 import utils.Vector;
 
@@ -29,6 +31,25 @@ public abstract class Creature extends GameObject{
        _boundingBox.setSize(70,30);
     }
     
+    void jump(){
+        if(_state == INAIR) return;
+        _state = INAIR;
+        _velExt.add(new Vector(0., -900));
+        
+    }
+    
+    void duck(){
+        
+    }
+    
+    void stand(){
+        
+    }
+    
+    void walk(double v){
+        Vector vel = new Vector(v,0);
+        _velExt = vel;
+    }
     
     @Override
     double getDamage(){

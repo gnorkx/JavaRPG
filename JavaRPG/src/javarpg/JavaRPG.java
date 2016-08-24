@@ -110,6 +110,7 @@ public class JavaRPG implements Runnable {
         _objectHandler.newPlayer();
         _objectHandler.newMonster(new Vector(400,300));
         
+        _objectHandler.newTile(new Tile(100,400,500,30));
         
     }
     

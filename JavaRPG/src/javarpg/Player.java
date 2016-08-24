@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static javarpg.ObjectState.*;
 import javax.imageio.ImageIO;
 import utils.Input;
 import utils.Vector;
@@ -43,14 +44,13 @@ public class Player extends Creature {
     public void handleInput(Input in){
        _in = in;
        double vel = 20;
-       Vector v = new Vector(0,0);
-       if(in.left == true) v.add( new Vector(-vel,0));
-       if(in.right == true) v.add( new Vector(vel,0));
-       if(in.up == true) v.add( new Vector(0,-vel));
-       if(in.down == true) v.add( new Vector(0,vel));
-       //v.scale(vel);
-       _vel = v;
-       if(in.lMouse == true) _attac.activate(this, _pos, _in.getMousePos());
+       if(in.left == true) walk(-vel);
+       else if(in.right == true) walk(vel);
+       else walk(0);
+       
+       if(in.up == true) jump();
+       
+       if(in.lMouse == true) _attac.activate(this, getPos(), _in.getMousePos());
     
     };
     

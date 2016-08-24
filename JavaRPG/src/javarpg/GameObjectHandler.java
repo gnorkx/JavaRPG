@@ -7,10 +7,13 @@ package javarpg;
 
 import java.awt.Graphics;
 import java.util.ArrayList;
+import java.util.function.Predicate;
+import static javarpg.ObjectState.*;
 import utils.Input;
 import utils.Rect;
 import utils.ServiceLocator;
 import utils.Vector;
+import static utils.Vector.*;
 
 /**
  *
@@ -30,11 +33,18 @@ public class GameObjectHandler {
         _projectiles.add(p);
     }
     
+    void newTile(Tile t){
+        _world.add(t);
+    }
+    
     void newMonster(Vector pos) {
         _creatures.add((Creature) new Monster(pos));
     }
     
     void update(){
+        
+        cleanUp();
+        
         for(Creature c: _creatures){
             c.update();
         }
@@ -54,16 +64,28 @@ public class GameObjectHandler {
                 handleCollision(c1,c2);
             }
         }
-        
+        for(Creature c: _creatures){
+            for(Tile t: _world){
+                handleCollision(c,t);
+            }
+        }
+    }
+    
+    void cleanUp(){
+        _creatures.removeIf((GameObject o) -> o.getState() == DELETE);
+        _projectiles.removeIf((GameObject o) -> o.getState() == DELETE);
     }
     
     void render(Graphics g){
         for(Creature c: _creatures){
-            ServiceLocator.getRender().render(c);
+            ServiceLocator.getRender().render(c); 
         }
         for(Projectile p: _projectiles){
             ServiceLocator.getRender().render(p);
-        }    
+        }
+        for(Tile t: _world){
+            ServiceLocator.getRender().render(t);
+        }
     }
     
     void handleInput(Input in){
@@ -82,15 +104,36 @@ public class GameObjectHandler {
         
     }
     
+    private void handleCollision(GameObject o1, Tile t){
+        //do they collide?
+        Rect rect1 = o1.getBox(); Rect rect2 = t.getBox();
+        Rect overlap = rect1.getOverlap(rect2);
+        if(overlap == null) return;
+        //System.out.println("hit");
+        
+        handleTouch(o1,t, overlap);
+        
+    }
+    
     private void handleHit(GameObject o1, GameObject o2, Rect overlap){
         double d1 = o1.getDamage(); double d2 = o2.getDamage();
         o1.takeDamage(d2); o2.takeDamage(d1);
+    }
+    
+    private void handleTouch(GameObject o, Tile t, Rect overlap){
+        Rect rect1 = o.getBox(); Rect rect2 = t.getBox();
+        overlap.setW(0);
+        o.getBox().setPos(minus(rect1.getPos(),overlap.getSize()));
+        o.getVel().setY(0);
+        o.setState(GROUND);
+        
     }
             
     private ArrayList<GameObject> _objects = new ArrayList();
     private Player _player;
     private ArrayList<Projectile> _projectiles = new ArrayList();
     private ArrayList<Creature> _creatures = new ArrayList();
+    private ArrayList<Tile> _world = new ArrayList();
 
     
 }

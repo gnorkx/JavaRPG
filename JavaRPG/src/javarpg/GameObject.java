@@ -6,8 +6,9 @@
 package javarpg;
 import java.awt.Color;
 import utils.*;
-import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import static utils.Vector.add;
+import static javarpg.ObjectState.*;
 
 /**
  *
@@ -18,7 +19,6 @@ public abstract class GameObject {
     
     
     public GameObject(double x, double y){
-        _pos = new Vector(x,y);
         _vel = new Vector(0,0);
         _color = Color.white;
         _size = 20;
@@ -26,7 +26,6 @@ public abstract class GameObject {
     }
     
     public GameObject(double x, double y, double vx, double vy){
-        _pos = new Vector(x,y);
         _vel = new Vector(vx,vy);
         _color = Color.white;
         _size = 20;
@@ -38,11 +37,14 @@ public abstract class GameObject {
     
     
     public void setPos(int x, int y){
-        _pos.set(x, y);
+        getBox().setPos(x, y);
     }
 
     public Vector getPos(){
-        return _pos;
+        return getBox().getPos();
+    }
+    public Vector getVel(){
+        return _vel;
     }
     public int getSize(){
         return _size;
@@ -54,10 +56,18 @@ public abstract class GameObject {
         return _color;
     }
 
+    ObjectState getState() {
+        return _state;
+    }
+
+    void setState(ObjectState s) {
+        _state = s;
+    }
     
     protected void move(){
-        _pos.add(_vel.times(Global.dT));
-        _boundingBox.setPos(_pos);
+        _vel.add(new Vector(0,2));
+        Vector vtmp = add(_vel, _velExt);
+        _boundingBox.setPos(add(getPos(),vtmp.times(Global.dT)));
     }
     
     public BufferedImage getTexture(){
@@ -67,11 +77,15 @@ public abstract class GameObject {
     abstract double getDamage();    
     abstract void takeDamage(double d);
     
-    protected Vector _pos;
+    //protected Vector _pos;
     protected Vector _vel;
+    protected Vector _velExt = new Vector(); //non phys movement 
     protected Rect _boundingBox;
     
     protected int _size;
     protected Color _color;
     protected BufferedImage _texture;
+    protected ObjectState _state;
+
+    
 }
