@@ -11,13 +11,17 @@ package utils;
  */
 public class Input {
     
-    public boolean quit, up, down, left, right;
+    public boolean quit, up, down, left, right, zoom, unzoom;
     public boolean lMouse;
     public int x,y;
+    public Vector MousePosWorld;
     public boolean changed;
     
     public Vector getMousePos(){
         return new Vector(x,y);
     }
     
+    public Vector getMousePosWorld(){
+        return MousePosWorld;
+    }
 }

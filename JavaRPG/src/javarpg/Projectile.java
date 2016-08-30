@@ -60,7 +60,7 @@ public class Projectile extends GameObject{
     
     @Override
     double getDamage(){
-        return _damage.getValue();
+        return _damage.getRandom();
     }
     
     @Override

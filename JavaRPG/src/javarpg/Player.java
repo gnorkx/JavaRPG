@@ -50,7 +50,7 @@ public class Player extends Creature {
        
        if(in.up == true) jump();
        
-       if(in.lMouse == true) _attac.activate(this, getPos(), _in.getMousePos());
+       if(in.lMouse == true) _attac.activate(this, getPos(), _in.getMousePosWorld());
     
     };
     

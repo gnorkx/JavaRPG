@@ -5,6 +5,7 @@
  */
 package utils;
 
+import java.util.Random;
 import javarpg.GameObjectHandler;
 import javarpg.JavaRPG;
 import javarpg.RenderingHandler;
@@ -34,8 +35,12 @@ public class ServiceLocator {
     public static GameObjectHandler getObjectHandler(){
         return _objectHandler;
     };
+    public static Random getRandom(){
+        return _rand;
+    };
     
     private static JavaRPG _game;
     private static RenderingHandler _renderingHandler;
     private static GameObjectHandler _objectHandler;
+    private static final Random _rand = new Random();
 }

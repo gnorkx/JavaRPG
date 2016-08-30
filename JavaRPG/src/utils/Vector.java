@@ -26,6 +26,12 @@ public class Vector implements Cloneable{
     public void set(double x, double y){
         _x = x; _y = y;
     }
+    public void setX(double x){
+        _x = x;
+    }
+    public void setY(double y){
+        _y = y;
+    }
     public void set(Vector v){
         _x = v.getX(); _y = v.getY();
     }

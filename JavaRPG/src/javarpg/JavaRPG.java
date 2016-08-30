@@ -60,6 +60,8 @@ public class JavaRPG implements Runnable {
     private void update(){
         
         _inputManager.update();
+        _inputManager.getInput().MousePosWorld = 
+                ServiceLocator.getRender().getCamera().Screen2World(_inputManager.getInput().getMousePos());
         handleInput(_inputManager.getInput());
         _objectHandler.handleInput(_inputManager.getInput());
         
@@ -75,14 +77,7 @@ public class JavaRPG implements Runnable {
         
         Canvas c = _screen.getCanvas();
         c.setBackground(Color.lightGray);
-        _bs = c.getBufferStrategy();
-        if(_bs == null){
-            _screen.getCanvas().createBufferStrategy(3);
-            _bs = c.getBufferStrategy();
-            _g = _bs.getDrawGraphics();
-            ServiceLocator.registerRender(new RenderingHandler(_g));
-            return;
-        }
+        //_bs = c.getBufferStrategy();
         //Clear Screen
         _g.clearRect(0, 0, Global.SCREEN_WIDTH, Global.SCREEN_HEIGHT);
         _objectHandler.render(_g);
@@ -112,12 +107,25 @@ public class JavaRPG implements Runnable {
         
         _objectHandler.newTile(new Tile(100,400,500,30));
         
+        
+         _screen.getCanvas().createBufferStrategy(3);
+        _bs = _screen.getCanvas().getBufferStrategy();
+        _g = _bs.getDrawGraphics();
+        ServiceLocator.registerRender(new RenderingHandler(_g));
+        
     }
     
     private void handleInput(Input in){
         
         if(in.quit == true)
             _running = false;
+        if(in.zoom){
+            Camera cam = ServiceLocator.getRender().getCamera();
+            cam.setZoom(cam.getZoom()*1.05);
+        }else if(in.unzoom){
+            Camera cam = ServiceLocator.getRender().getCamera();
+            cam.setZoom(cam.getZoom()/1.05);
+        }
         
     }
    

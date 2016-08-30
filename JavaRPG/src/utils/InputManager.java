@@ -28,6 +28,8 @@ public class InputManager extends MouseInputAdapter implements KeyListener {
         _input.left = keys[KeyEvent.VK_A];
         _input.right = keys[KeyEvent.VK_D];
         _input.quit = keys[KeyEvent.VK_Q];
+        _input.zoom = keys[KeyEvent.VK_O];
+        _input.unzoom = keys[KeyEvent.VK_P];
     }
     
     @Override

@@ -7,6 +7,8 @@ package javarpg;
 
 import java.awt.Graphics;
 import utils.Vector;
+import utils.Camera;
+import utils.Rect;
 
 /**
  *
@@ -15,17 +17,27 @@ import utils.Vector;
 public class RenderingHandler {
     public RenderingHandler(Graphics g){
         _g = g;
+        _camera = new Camera();
     }
     
     void render(GameObject o){
-         Vector pos = new Vector(o.getPos());
-        _g.drawImage(o.getTexture(), (int)pos.getX(), (int)pos.getY(),(int)o.getBox().getW(),(int)o.getBox().getH(),null);
+         Rect tmp = _camera.World2Screen(o.getBox());
+        _g.drawImage(o.getTexture(), (int)tmp.getPos().getX(), (int)tmp.getPos().getY(),
+                (int)tmp.getSize().getX(),(int)tmp.getSize().getY(),null);
         
     }
     void render(Tile t){
-         Vector pos = new Vector(t.getBox().getPos());
-        _g.drawImage(t.getTexture(), (int)pos.getX(), (int)pos.getY(),(int)t.getBox().getW(),(int)t.getBox().getH(),null);
+         Rect tmp = _camera.World2Screen(t.getBox());
+        _g.drawImage(t.getTexture(), (int)tmp.getPos().getX(), (int)tmp.getPos().getY(),
+                (int)tmp.getSize().getX(),(int)tmp.getSize().getY(),null);
         
     }
+    
+    
+    public Camera getCamera(){
+        return _camera;
+    }
+    
     private Graphics _g;
+    private Camera _camera;
 }
