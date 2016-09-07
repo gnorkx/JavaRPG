@@ -26,7 +26,7 @@ public class Player extends Creature {
     public Player(double x, double y) {
         super(x, y);
         _attac = new Attac();
-        _boundingBox.setSize(50.,80.);
+        _boundingBox.setSize(0.8,2.);
         try {
             _texture = ImageIO.read(new File("res/archer.png"));
         } catch (IOException ex) {
@@ -43,14 +43,18 @@ public class Player extends Creature {
     
     public void handleInput(Input in){
        _in = in;
-       double vel = 20;
+       double vel = 1.5;
        if(in.left == true) walk(-vel);
        else if(in.right == true) walk(vel);
        else walk(0);
        
        if(in.up == true) jump();
        
-       if(in.lMouse == true) _attac.activate(this, getPos(), _in.getMousePosWorld());
+       if(in.lMouse == true) {
+           _attac.activate(this, getPos(), _in.getMousePosWorld());
+           System.out.println(getPos());
+           System.out.println(_in.getMousePosWorld());
+       }
     
     };
     

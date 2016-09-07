@@ -65,7 +65,7 @@ public abstract class GameObject {
     }
     
     protected void move(){
-        _vel.add(new Vector(0,2));
+        _vel.add(new Vector(0,0.3));
         Vector vtmp = add(_vel, _velExt);
         _boundingBox.setPos(add(getPos(),vtmp.times(Global.dT)));
     }

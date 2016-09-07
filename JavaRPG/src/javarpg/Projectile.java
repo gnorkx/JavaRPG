@@ -29,7 +29,7 @@ public class Projectile extends GameObject{
     
     public Projectile(Vector start, Vector end, GameObject o){
         super(start.getX(), start.getY(), 0, 0);
-        double v = 180;
+        double v = 10;
         Vector vel = Vector.minus(end,start);
         vel.scale( v/vel.abs() );
         _vel.set(vel);
@@ -40,7 +40,7 @@ public class Projectile extends GameObject{
     private void init(){
         _color = Color.blue;
         _size = 5;
-        _boundingBox.setSize(40.,30.);
+        _boundingBox.setSize(1.,0.9);
         _damage = new Range(5,15);
         try {
             _texture = ImageIO.read(new File("res/arrow.png"));

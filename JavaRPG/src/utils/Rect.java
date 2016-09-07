@@ -50,6 +50,15 @@ public class Rect {
         _h = h;
     }
     
+    public void scaleH(double x){
+        _h *= x;
+    }
+   
+    public void scaleW(double x){
+        _w *= x;
+    }
+   
+    
     @Override
     public String toString(){
         return "[ "+ _x + ", " + _y +", "+ _w + ", " + _h +" ]";

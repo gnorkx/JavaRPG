@@ -28,13 +28,13 @@ public abstract class Creature extends GameObject{
     
     public void dead(){
       // _pos.set(99999,99999);
-       _boundingBox.setSize(70,30);
+       _boundingBox.scaleH(0.8);
     }
     
     void jump(){
         if(_state == INAIR) return;
         _state = INAIR;
-        _velExt.add(new Vector(0., -900));
+        _velExt.add(new Vector(0., -50));
         
     }
     

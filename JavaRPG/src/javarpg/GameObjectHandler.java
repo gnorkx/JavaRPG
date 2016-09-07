@@ -25,7 +25,7 @@ public class GameObjectHandler {
     
     
     void newPlayer(){
-       _player = new Player(200,300); 
+       _player = new Player(3,4); 
        _creatures.add((Creature)_player);
     };
     

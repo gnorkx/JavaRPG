@@ -103,9 +103,9 @@ public class JavaRPG implements Runnable {
         _objectHandler = new GameObjectHandler();
         ServiceLocator.registerObjectHandler(_objectHandler);
         _objectHandler.newPlayer();
-        _objectHandler.newMonster(new Vector(400,300));
+        _objectHandler.newMonster(new Vector(5,3));
         
-        _objectHandler.newTile(new Tile(100,400,500,30));
+        _objectHandler.newTile(new Tile(1,5,5,1));
         
         
          _screen.getCanvas().createBufferStrategy(3);

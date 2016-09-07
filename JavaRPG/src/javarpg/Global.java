@@ -11,7 +11,7 @@ package javarpg;
  */
 public class Global {
  
-    static double dT = 0.1;
+    static double dT = 1./60.;
     static final int SCREEN_WIDTH = 640;
     static final int SCREEN_HEIGHT = 640;
     

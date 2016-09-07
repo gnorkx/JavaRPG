@@ -14,7 +14,7 @@ public class Camera {
     public Camera(){
         _center = new Vector(0.,0.);
         //_fov = Rect();
-        _zoom = new Range(0.5, 1.5, 1.);
+        _zoom = new Range(30, 100, 50);
     }
     
     public Vector getPos(){
