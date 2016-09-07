@@ -63,5 +63,5 @@ public abstract class Creature extends GameObject{
     }
        
     protected Jar _health;
-    
+    Attac _attac;
 }

@@ -27,6 +27,7 @@ public class GameObjectHandler {
     void newPlayer(){
        _player = new Player(3,4); 
        _creatures.add((Creature)_player);
+       
     };
     
     void newProjectile(Projectile p){
@@ -134,6 +135,10 @@ public class GameObjectHandler {
     private ArrayList<Projectile> _projectiles = new ArrayList();
     private ArrayList<Creature> _creatures = new ArrayList();
     private ArrayList<Tile> _world = new ArrayList();
+
+    Player getPlayer() {
+        return _player;
+    }
 
     
 }

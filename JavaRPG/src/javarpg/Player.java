@@ -5,17 +5,12 @@
  */
 package javarpg;
 
-import java.awt.Color;
-import java.awt.Graphics;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static javarpg.ObjectState.*;
 import javax.imageio.ImageIO;
 import utils.Input;
-import utils.Vector;
-import utils.Jar;
 
 /**
  *
@@ -61,6 +56,6 @@ public class Player extends Creature {
     
     
     Input _in;
-    Attac _attac;
+    
     
 }
