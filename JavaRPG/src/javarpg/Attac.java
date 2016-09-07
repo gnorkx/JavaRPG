@@ -19,7 +19,7 @@ public class Attac {
     void activate(GameObject o, Vector start, Vector end){
         if(_timer == 0){
             attac(o,start,end);
-            _timer = 10;
+            _timer = 20;
         }
     }
     

@@ -61,7 +61,7 @@ public class Monster extends Creature {
    private Vector scanForPlayer(){
        Vector playerPos = ServiceLocator.getObjectHandler().getPlayer().getPos();
        Vector diff = Vector.minus(playerPos, getPos());
-       if(diff.abssqr() < 100)
+       if(diff.abssqr() < 10)
            return playerPos;
        else 
            return null;

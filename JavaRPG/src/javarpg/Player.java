@@ -33,6 +33,8 @@ public class Player extends Creature {
     public void update(){
         move();
         _attac.update();
+         if(_health.isEmpty())
+            dead();
     };
     
     
